@@ -1,18 +1,22 @@
-# 📈 Query Performance After Indexing
+# Index Performance Report
 
-## What We Did:
-- Created indexes on frequently used columns in queries (e.g., user_id, start_date).
-- Used tools like `EXPLAIN` and `ANALYZE` to measure performance before and after indexing.
+## Created Indexes
 
-## Results:
+- `idx_booking_user_id` on the `Booking` table (column `user_id`)
+- `idx_booking_property_id` on the `Booking` table (column `property_id`)
+- `idx_review_property_id` on the `Review` table (column `property_id`)
+- `idx_booking_start_date` on the `Booking` table (column `start_date`)
 
-| Query                                  | Before Indexing | After Indexing |
-|----------------------------------------|------------------|-----------------|
-| SELECT with `user_id` condition        | 800ms            | 120ms           |
-| JOIN between `bookings` and `users`    | 950ms            | 200ms           |
-| SELECT with `start_date` condition     | 1.1s             | 180ms           |
+## Performance Before Indexing
 
-## Notes:
-- Clear improvement in execution speed after indexing.
-- Some queries became 4–6 times faster.
-- Indexing is especially effective on large datasets.
+We used `EXPLAIN ANALYZE` on queries involving `WHERE`, `JOIN`, and `ORDER BY` clauses on the above columns.
+
+Execution times were relatively high, and full table scans were often performed.
+
+## Performance After Indexing
+
+After creating the indexes, a significant improvement in query execution time was observed. The database engine utilized the indexes to locate rows quickly instead of performing full scans.
+
+---
+
+**Recommendation**: Continue monitoring query performance and add indexes as needed based on query patterns.
