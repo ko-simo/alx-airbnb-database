@@ -2,25 +2,26 @@
 
 ## Initial Query
 
-A complex query was executed to retrieve booking details along with user, property, and payment information.
+A query was executed to retrieve bookings along with user, property, and payment information.
 
 ## Analysis with EXPLAIN
 
-Using `EXPLAIN`, we identified the following issues:
-- Some unnecessary columns were being selected.
-- Some joins were redundant or not optimized.
-- There were no supporting indexes on the join columns.
+The original query fetched many columns and joined multiple large tables. Using `EXPLAIN`, we observed:
 
-## Optimization Implemented
+- High cost joins due to missing indexes
+- Full table scans for some joins
+- Unnecessary fields selected
 
-- Selected only the required columns to reduce I/O.
-- Ensured indexes existed on the commonly joined columns (`user_id`, `property_id`, `booking_id`).
-- Refactored the query to minimize joins and focus on essential relationships.
+## Optimization Applied
+
+- Limited selection to essential columns only
+- Ensured indexes exist on `user_id`, `property_id`, and `booking_id`
+- Simplified the query to reduce load
 
 ## Results
 
-Execution time was significantly improved, with reduced memory usage and faster response.
+- Query execution time improved significantly
+- Less memory and CPU usage
+- Cleaner and more maintainable query structure
 
----
-
-**Recommendation**: Maintain minimal join complexity and continue using `EXPLAIN` to analyze query plans before deployment.
+**Tools Used**: `EXPLAIN ANALYZE`, PostgreSQL optimizer
