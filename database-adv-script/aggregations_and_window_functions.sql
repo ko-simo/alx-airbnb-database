@@ -1,15 +1,21 @@
+
 SELECT
-    users.id AS user_id,
-    users.name,
-    COUNT(bookings.id) AS total_bookings
-FROM users
-LEFT JOIN bookings ON users.id = bookings.user_id
-GROUP BY users.id, users.name;
+    user_id,
+    COUNT(*) AS total_bookings
+FROM bookings
+GROUP BY user_id;
+
+WITH property_booking_counts AS (
+    SELECT
+        property_id,
+        COUNT(*) AS total_bookings
+    FROM bookings
+    GROUP BY property_id
+)
 
 SELECT
     property_id,
-    COUNT(*) AS total_bookings,
-    ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS rank_by_bookings
-FROM bookings
-GROUP BY property_id;
+    total_bookings,
+    RANK() OVER (ORDER BY total_bookings DESC) AS booking_rank
+FROM property_booking_counts;
 
