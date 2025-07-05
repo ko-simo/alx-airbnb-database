@@ -1,4 +1,3 @@
-
 SELECT
     bookings.id AS booking_id,
     bookings.start_date,
@@ -9,7 +8,6 @@ SELECT
 FROM bookings
 INNER JOIN users ON bookings.user_id = users.id;
 
-
 SELECT
     properties.id AS property_id,
     properties.name,
@@ -18,7 +16,6 @@ SELECT
     reviews.comment
 FROM properties
 LEFT JOIN reviews ON properties.id = reviews.property_id;
-
 
 SELECT
     users.id AS user_id,
@@ -37,4 +34,3 @@ SELECT
     bookings.start_date
 FROM users
 RIGHT JOIN bookings ON users.id = bookings.user_id;
-
