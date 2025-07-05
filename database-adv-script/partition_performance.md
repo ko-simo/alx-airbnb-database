@@ -1,21 +1,23 @@
-# 🚀 Booking Table Partitioning Report
+# Partitioning Performance Report
 
-## Goal:
-Improve performance of date-based queries on large `bookings` table by applying range partitioning on the `start_date` column.
+## Scenario
 
-## Approach:
-- Used `PARTITION BY RANGE (YEAR(start_date))` to divide data into yearly segments.
-- Tested SELECT queries filtering by date range (e.g., WHERE start_date BETWEEN ...).
+The `Booking` table was assumed to be large and suffering from slow query performance, especially when filtering by date.
 
-## Results:
+## Action Taken
 
-| Query Type                         | Non-Partitioned | Partitioned |
-|------------------------------------|------------------|-------------|
-| Fetch bookings for 2023            | ~1.2s            | ~200ms      |
-| Fetch bookings between 2022-2024   | ~1.5s            | ~320ms      |
+We partitioned the `Booking` table by `start_date` using range-based partitioning. Separate partitions were created for each year (e.g., 2024, 2025).
 
-## Observation:
-- Major speedup on date range queries.
-- Partitioning reduced scanned rows significantly.
-- Useful for analytics or reporting on large datasets.
+## Performance Testing
 
+Queries were executed targeting specific date ranges using `WHERE start_date BETWEEN ...`. The partitioned table showed significantly improved performance by scanning only the relevant partition.
+
+## Observations
+
+- Query execution time was reduced.
+- Resource consumption was optimized.
+- Data access became more efficient for time-based queries.
+
+---
+
+**Recommendation**: Continue using partitioning for large tables, especially those frequently queried by time or ID ranges.
