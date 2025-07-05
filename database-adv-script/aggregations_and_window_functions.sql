@@ -1,4 +1,4 @@
--- Total number of bookings per user
+-- Count total bookings per user
 SELECT
     u.user_id,
     u.name,
@@ -10,7 +10,7 @@ LEFT JOIN
 GROUP BY
     u.user_id, u.name;
 
--- Ranking properties based on number of bookings using RANK()
+-- Rank properties based on total bookings using RANK()
 SELECT
     property_id,
     property_name,
