@@ -56,3 +56,19 @@ FROM
 LEFT JOIN
     User u ON u.user_id = b.user_id
 WHERE u.user_id IS NULL;
+
+-- LEFT JOIN
+
+SELECT
+    p.property_id,
+    p.property_name,
+    r.review_id,
+    r.rating,
+    r.comment
+FROM
+    Property p
+LEFT JOIN
+    Review r ON p.property_id = r.property_id
+ORDER BY
+    p.property_id, r.review_id;
+
