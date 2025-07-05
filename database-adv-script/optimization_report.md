@@ -1,23 +1,26 @@
-# 🧠 Query Optimization Report
+# Query Optimization Report
 
-## Initial Query:
-- Joined 4 tables without filtering specific columns.
-- No indexes were used.
-- Execution time: ~1.4 seconds
+## Initial Query
 
-## Optimization Techniques Used:
-- Selected only required columns.
-- Added WHERE clause on indexed column (`start_date`).
-- Ensured indexes exist on:
-  - `bookings.start_date`
-  - `bookings.user_id`
-  - `bookings.property_id`
-  - `payments.booking_id`
+A complex query was executed to retrieve booking details along with user, property, and payment information.
 
-## Result:
-- Execution time reduced from ~1.4s to ~300ms
-- Much faster response, especially on large datasets.
+## Analysis with EXPLAIN
 
-## Tools Used:
-- EXPLAIN
-- ANALYZE
+Using `EXPLAIN`, we identified the following issues:
+- Some unnecessary columns were being selected.
+- Some joins were redundant or not optimized.
+- There were no supporting indexes on the join columns.
+
+## Optimization Implemented
+
+- Selected only the required columns to reduce I/O.
+- Ensured indexes existed on the commonly joined columns (`user_id`, `property_id`, `booking_id`).
+- Refactored the query to minimize joins and focus on essential relationships.
+
+## Results
+
+Execution time was significantly improved, with reduced memory usage and faster response.
+
+---
+
+**Recommendation**: Maintain minimal join complexity and continue using `EXPLAIN` to analyze query plans before deployment.
