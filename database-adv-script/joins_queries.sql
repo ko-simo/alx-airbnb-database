@@ -1,4 +1,4 @@
--- 🔹 1. INNER JOIN: الحجوزات مع بيانات المستخدمين المرتبطين بها
+
 SELECT
     bookings.id AS booking_id,
     bookings.start_date,
@@ -9,7 +9,7 @@ SELECT
 FROM bookings
 INNER JOIN users ON bookings.user_id = users.id;
 
--- 🔹 2. LEFT JOIN: كل الممتلكات حتى بدون تقييم
+
 SELECT
     properties.id AS property_id,
     properties.name,
@@ -19,8 +19,7 @@ SELECT
 FROM properties
 LEFT JOIN reviews ON properties.id = reviews.property_id;
 
--- 🔹 3. FULL OUTER JOIN: جميع المستخدمين والحجوزات حتى غير المرتبطين ببعض
--- ⚠️ إذا كنت تستعمل MySQL (الذي لا يدعم FULL OUTER JOIN مباشرة)، يمكنك استخدام:
+
 SELECT
     users.id AS user_id,
     users.name,
