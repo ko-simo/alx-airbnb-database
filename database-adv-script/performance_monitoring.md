@@ -1,28 +1,18 @@
-# 🛠️ Database Performance Monitoring Report
+# Database Performance Monitoring Report
 
-## Tools Used:
-- `EXPLAIN` — to view the query execution plan.
-- `SHOW PROFILE` — to check resource usage (CPU, memory, etc.).
-- `EXPLAIN ANALYZE` — for detailed performance breakdown.
+## Tools Used
 
-## Queries Monitored:
-- Booking search by user and date.
-- Complex joins across `bookings`, `users`, and `payments`.
+- `EXPLAIN`
+- `EXPLAIN ANALYZE`
+- `SHOW PROFILE` (where supported)
 
-## Bottlenecks Identified:
-- Missing indexes on `user_id`, `start_date`, and `booking_id`.
-- Redundant joins retrieving unused fields.
+## Queries Monitored
 
-## Actions Taken:
-- Created indexes on key columns (see `database_index.sql`).
-- Optimized SELECT statements by only including necessary columns.
-- Partitioned the `bookings` table by year to improve date filtering.
+Example:
 
-## Improvements:
-| Metric                  | Before         | After          |
-|-------------------------|----------------|----------------|
-| Query Execution Time    | ~1.3s          | ~250ms         |
-| Rows Scanned            | 50,000+        | ~10,000        |
-
-## Conclusion:
-Regular profiling + indexing + partitioning can significantly improve database performance in real-world apps.
+```sql
+SELECT b.booking_id, u.name, p.property_name
+FROM Booking b
+JOIN User u ON b.user_id = u.user_id
+JOIN Property p ON b.property_id = p.property_id
+WHERE b.start_date >= '2025-01-01';
